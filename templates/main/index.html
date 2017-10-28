@@ -80,7 +80,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {% for cat in category_list %}
-                        <div class="dropdown-item" onclick="chooseCategory({{ cat.id }})">{{ cat.name }}</div>
+                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
                     {% endfor %}
                 </div>
             </div>

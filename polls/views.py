@@ -16,9 +16,10 @@ from .forms import *
 
 def index(request):
     contests = Contest.objects.all()
-
+    categories = Contest.objects.values('category').distinct()
     context = {
-        'contest_list': contests
+        'contest_list': contests,
+        'category_list': categories
     }
 
     return render(request, "main/index.html", context)
@@ -53,7 +54,8 @@ def addData(request):
                                date_finish=datetime.strptime(row['finish'], "%d.%m.%Y").date(),
                                category=int(row['category']),
                                coordinates=str(row['coordinates']),
-                               site_link=str(row['contacts'])
+                               site_link=str(row['contacts']),
+                               address=str(row['adress'])
                                );
 
     return redirect("index")
