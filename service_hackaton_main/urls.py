@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', polls_views.index, name="index"),
     url(r'^admin/', admin.site.urls),
     url(r'^addData/', polls_views.addData, name="addData"),
+    url(r'^addContest/', polls_views.addContest, name="addContest"),
     url(r'^vkParsing/', polls_views.vkParsing, name="vkParsing"),
     url(r'^webParsing/', polls_views.webParsing, name="webParsing"),
     url(r'^chooseCategory/(?P<id>[0-9]+)', polls_views.chooseCategory, name="chooseCategory"),

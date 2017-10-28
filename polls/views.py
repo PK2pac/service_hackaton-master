@@ -58,7 +58,7 @@ def chooseCategory(request, id):
     cat_id = request.GET.get('id')
     if id == 0:
         contests = Contest.objects.all()
-        print('id == 0 print contests=', contests)
+        #print('id == 0 print contests=', contests)
         test = json.dumps(get_t_d(contests))
         return HttpResponse(test, content_type="application/json")
     else:
@@ -87,6 +87,23 @@ def addData(request):
                                );
 
     return redirect("index")
+
+
+@csrf_exempt
+def addContest(request):
+    title = request.POST.get('title')
+    description = request.POST.get('descr')
+    categ = request.POST.get('categ')
+    start = request.POST.get('start')
+    finish = request.POST.get('finish')
+    link = request.POST.get('link')
+    address = request.POST.get('address')
+    coordinates=""
+    Contest.objects.create(title=title, description=description, category=categ, date_start=None, date_finish=None, site_link=link,address=address, coordinates="")
+
+    return redirect("index")
+
+
 
 @csrf_exempt
 def vkParsing(request):
