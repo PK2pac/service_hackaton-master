@@ -25,6 +25,20 @@ def index(request):
 
     return render(request, "main/index.html", context)
 
+"""
+for getting title and description for list of dicts
+it returns a list of strings
+use split() to get title and description, delimiter:',' 
+"""
+def get_t_d(dict):
+    td_list = []
+    for i, item in enumerate (dict):
+	    
+        title = item['fields']['title']
+        description = item['fields']['description']
+        t_d_string = "%s, %s" % (title, description)
+        td_list.append(t_d_string)
+    return td_list
 
 def get_t_d(dict):
     td_list = []
