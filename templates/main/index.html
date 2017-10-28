@@ -10,149 +10,150 @@
   </li>
 </ul>
 
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="home-tab">
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="home-tab">
 
-    <div id="map"></div>
-    <script>
+            <div id="map"></div>
+            <script>
 
-        var map;
+                var map;
 
-        function initMap() {
-            var uluru = {lat: 56.475312, lng: 84.979186};
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: uluru
-            });
-        }
+                function initMap() {
+                    var uluru = {lat: 56.475312, lng: 84.979186};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 12,
+                        center: uluru
+                    });
+                }
 
-        {% comment %}
-        function addMarkers() {
-            {% for organisation in organisation_list %}
-                var latLng = "{{ organisation.coordinates }}".toString().split(',');
-                var lat = Number(parseFloat(latLng[0]).toFixed(6));
-                var lng = Number(parseFloat(latLng[1]).toFixed(6));
-                var point = new google.maps.LatLng(lat,lng);
-                var marker = new google.maps.Marker({
-                    position: point,
-                    map: map,
-                    title: '{{ organisation.name }}',
-                });
 
-                var contest_info = "";
+                function addMarkers() {
+                    {% for organisation in contest_list %}
+                        var latLng = "{{ organisation.coordinates }}".toString().split(',');
+                        var lat = Number(parseFloat(latLng[0]).toFixed(6));
+                        var lng = Number(parseFloat(latLng[1]).toFixed(6));
+                        var point = new google.maps.LatLng(lat,lng);
 
-                {% for contest in contest_list %}
-                    {% if contest.organisation == organisation %}
-                        contest_info += "<li>" + "{{ contest.title }}" + "</li>";
-                    {% endif %}
-                {% endfor %}
+                        var image = 'https://cdn4.iconfinder.com/data/icons/32x32-free-design-icons/32/Info.png';
+                        var marker = new google.maps.Marker({
+                            position: point,
+                            map: map,
+                            title: '{{ organisation.title }}',
+                            icon: image
+                        });
 
-                marker['infowindow'] = new google.maps.InfoWindow({
-                    content: "<ul>"+contest_info+"</ul>",
-                });
 
-                google.maps.event.addListener(marker, 'click', function() {
-                    this['infowindow'].open(map, this);
-                });
 
-            {% endfor %}
-        }
+                        marker['infowindow'] = new google.maps.InfoWindow({
+                            content: "<ul>"+"{{ organisation.title }}"+"</ul>"
+                        });
 
-{% endcomment %}
-        {% comment %}function test_func(e) {
+                        google.maps.event.addListener(marker, 'click', function() {
+                            this['infowindow'].open(map, this);
+                        });
+
+                    {% endfor %}
+                }
+
+
+                {% comment %}function test_func(e) {
             alert(e);
         }{% endcomment %}
 
-    </script>
-        <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZxxmJGIybr6i-A2Oj9CJWGfbdjicwGaU&callback=initMap">
-        </script>
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZxxmJGIybr6i-A2Oj9CJWGfbdjicwGaU&callback=initMap">
+            </script>
 
-    </div>
-    <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="profile-tab">
-
-        <br>
-        <form class="form-inline">
-
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Выбрать категорию
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {% for cat in category_list %}
-                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
-                    {% endfor %}
-                </div>
-            </div>
-
-        </form>
-
-        <form action="/addData/">
-            <div class="form-group">
-                <label for="exampleFormControlFile1">Загрузить данные</label>
-{#                <input type="file" class="form-control-file" name="exampleFormControlFile1">#}
-                <input type="submit" value="Аплоад">
-            </div>
-        </form>
-
-        <br>
-        <div class="list-group">
-
-            <ul class="list-group" id="contest_list_ul">
-
-                    {% for contest in contest_list %}
-                        <li class="list-group-item">
-                            <div>
-                                <span><strong>{{ contest.title }}</strong></span>
-                                <br>
-                                <span>{{ contest.description }}</span>
-
-                            </div>
-                        </li>
-                    {% endfor %}
-
-            </ul>
         </div>
+        <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="profile-tab">
+        <center>
+            <div  style="width:80%; ">
+                <br>
 
+                <form action="/addData/">
+                    <div class="form-group">
+                        {#                <input type="file" class="form-control-file" name="exampleFormControlFile1">#}
+                        <input type="submit" value="Загрузить данные" class="btn btn-warning">
+                    </div>
+                </form>
+
+                <form class="form-inline">
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Выбрать категорию
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% for cat in category_list %}
+                                <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form>
+
+
+
+                <br>
+                <div class="list-group">
+
+                    <ul class="list-group" id="contest_list_ul">
+
+                        {% for contest in contest_list %}
+                            <li class="list-group-item">
+                                <div>
+                                    <span><strong>{{ contest.title }}</strong></span>
+                                    <br>
+                                    <span>{{ contest.description }}</span>
+
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+
+            </div>
+        </center>
+        </div>
     </div>
-</div>
 
-<script>
+    <script>
 
-    function chooseCategory(id){
-        jQuery.ajax({
-            url: '/chooseCategory/' + id,
-            type : "GET",
-            data: {
-                'id': id
-            },
-            dataType: 'json',
+        function chooseCategory(id){
+            jQuery.ajax({
+                url: '/chooseCategory/' + id,
+                type : "GET",
+                data: {
+                    'id': id
+                },
+                dataType: 'json',
 
-            error: function(data){
-                var c_list = data['contest_list'];
-                console.log(data)
-                console.log(c_list)
-                var str = "";
+                error: function(data){
+                    var c_list = data['contest_list'];
+                    console.log(data)
+                    console.log(c_list)
+                    var str = "";
 
-                for (var i = 0; i< list.length; i++){
-                    str += "<li>" + "{{ contest.title }}" + "</li>";
+                    for (var i = 0; i< list.length; i++){
+                        str += "<li>" + "{{ contest.title }}" + "</li>";
+                    }
+
+                    //   $('#contest_list_ul').empty();
+                    var list1 = JSON.parse(c_list)
+                    for (var i = 0; i < list1.length; i++){
+                        $('#contest_list_ul').append('<li>'+ list1[i].title+'</li>')
+
+                    }
+
+                    //<li class="list-group-item"> <div> <span><strong>first_contest</strong></span> <br> <span>desrctob</span> </div> </li>
+                    //$('#contest_list_ul').text('sss')
+
                 }
+            });
 
-             //   $('#contest_list_ul').empty();
-                var list1 = JSON.parse(c_list)
-                for (var i = 0; i < list1.length; i++){
-                $('#contest_list_ul').append('<li>'+ list1[i].title+'</li>')
+        }
 
-                }
-
-                //<li class="list-group-item"> <div> <span><strong>first_contest</strong></span> <br> <span>desrctob</span> </div> </li>
-                //$('#contest_list_ul').text('sss')
-
-            }
-        });
-
-    }
-
-</script>
+    </script>
 
 {% endblock %}

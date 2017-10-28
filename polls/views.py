@@ -16,7 +16,8 @@ from .forms import *
 
 def index(request):
     contests = Contest.objects.all()
-    categories = Contest.objects.values('category').distinct()
+    categories = Contest.objects.values('category').distinct().order_by()
+
     context = {
         'contest_list': contests,
         'category_list': categories
