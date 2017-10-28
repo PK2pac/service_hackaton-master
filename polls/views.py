@@ -56,17 +56,14 @@ def get_t_d(dict):
 
 def chooseCategory(request, id):
     cat_id = request.GET.get('id')
-    print(cat_id)
     if id == 0:
         contests = Contest.objects.all()
         print('id == 0 print contests=', contests)
         test = json.dumps(get_t_d(contests))
-        print(contests)
         return HttpResponse(test, content_type="application/json")
     else:
         contests = Contest.objects.filter(category=cat_id)
         test = json.dumps(get_t_d(contests))
-        print(contests)
         return HttpResponse(test, content_type="application/json")
 
 
@@ -76,7 +73,6 @@ def addData(request):
     data = pd.read_csv('./polls/dataset.csv', delimiter=';', encoding='utf-8')
     for index, row in data.iterrows():
         #with open(f) as csvfile:
-        print('sfhsf4h4ht4h4j4h5446jj4j464j')
         #readCSV = csv.reader(csvfile, delimiter=';')
         #for row in readCSV:
             #print(row[0])
