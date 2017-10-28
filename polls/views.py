@@ -91,13 +91,13 @@ def addData(request):
 
 @csrf_exempt
 def addContest(request):
-    title = request.POST.get('title')
-    description = request.POST.get('descr')
-    categ = request.POST.get('categ')
-    start = request.POST.get('start')
-    finish = request.POST.get('finish')
-    link = request.POST.get('link')
-    address = request.POST.get('address')
+    title = request.POST['title']
+    description = request.POST['descr']
+    categ = request.POST['categ']
+    start = request.POST['start']
+    finish = request.POST['finish']
+    link = request.POST['link']
+    address = request.POST['address']
     coordinates=""
     Contest.objects.create(title=title, description=description, category=categ, date_start=None, date_finish=None, site_link=link,address=address, coordinates="")
 
