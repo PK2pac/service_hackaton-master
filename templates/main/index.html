@@ -26,7 +26,7 @@
             });
         }
 
-
+        {% comment %}
         function addMarkers() {
             {% for organisation in organisation_list %}
                 var latLng = "{{ organisation.coordinates }}".toString().split(',');
@@ -58,7 +58,7 @@
             {% endfor %}
         }
 
-
+{% endcomment %}
         {% comment %}function test_func(e) {
             alert(e);
         }{% endcomment %}
