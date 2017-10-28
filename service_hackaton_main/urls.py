@@ -20,5 +20,6 @@ from polls import views as polls_views
 urlpatterns = [
     url(r'^$', polls_views.index, name="index"),
     url(r'^admin/', admin.site.urls),
+    url(r'^addData/', polls_views.addData, name="addData"),
     url(r'^chooseCategory/(?P<id>[0-9]+)', polls_views.chooseCategory, name="chooseCategory"),
 ]

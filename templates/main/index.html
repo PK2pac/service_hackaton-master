@@ -80,11 +80,19 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {% for cat in category_list %}
-                        <div class="dropdown-item" onclick="chooseCategory({{ cat.id }})">{{ cat.name }}</div>
+                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
                     {% endfor %}
                 </div>
             </div>
 
+        </form>
+
+        <form action="/addData/" method="post">
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Загрузить данные</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                <input type="submit" value="Аплоад">
+            </div>
         </form>
 
         <br>
