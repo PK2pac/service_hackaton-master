@@ -71,12 +71,32 @@
             <div  style="width:80%; ">
                 <br>
 
-                <form action="/addData/">
+                <table>
+                    <tr>
+                        <td>
+                            <form action="/addData/">
                     <div class="form-group">
                         {#                <input type="file" class="form-control-file" name="exampleFormControlFile1">#}
-                        <input type="submit" value="Загрузить данные" class="btn btn-warning">
+                        <input type="submit" value="Загрузить данные CSV" class="btn btn-warning">
                     </div>
                 </form>
+                        </td>
+                        <td>
+                            <form action="">
+                    <div class="form-group">
+                        <input type="button" value="Найти мероприятия VK" class="btn btn-success">
+                    </div>
+                </form>
+                        </td>
+                        <td>
+                            <form action="">
+                    <div class="form-group">
+                        <input type="button" value="Найти мероприятия Web" class="btn btn-info">
+                    </div>
+                </form>
+                        </td>
+                    </tr>
+                </table>
 
                 <form class="form-inline">
 
