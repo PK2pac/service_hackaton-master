@@ -67,63 +67,63 @@
 
         </div>
         <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="profile-tab">
-        <center>
-            <div  style="width:80%; ">
-                <br>
+            <center>
+                <div  style="width:80%; ">
+                    <br>
 
-                <table>
-                    <tr>
-                        <td>
-                            <form action="/addData/">
-                    <div class="form-group">
-                        {#                <input type="file" class="form-control-file" name="exampleFormControlFile1">#}
-                        <input type="submit" value="Загрузить данные CSV" class="btn btn-warning">
-                    </div>
-                </form>
-                        </td>
-                        <td>
-                            <form action="">
-                    <div class="form-group">
-                        <input type="button" value="Найти мероприятия VK" class="btn btn-success">
-                    </div>
-                </form>
-                        </td>
-                        <td>
-                            <form action="">
-                    <div class="form-group">
-                        <input type="button" value="Найти мероприятия Web" class="btn btn-info">
-                    </div>
-                </form>
-                        </td>
-                    </tr>
-                </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <form action="/addData/">
+                                    <div class="form-group">
+                                        {#                <input type="file" class="form-control-file" name="exampleFormControlFile1">#}
+                                        <input type="submit" value="Загрузить данные CSV" class="btn btn-warning">
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/vkParsing/">
+                                    <div class="form-group">
+                                        <input type="button" value="Найти мероприятия VK" class="btn btn-success">
+                                    </div>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/webParsing/">
+                                    <div class="form-group">
+                                        <input type="button" value="Найти мероприятия Web" class="btn btn-info">
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
 
-                <form class="form-inline">
+                    <form class="form-inline">
 
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Выбрать категорию
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% for cat in category_list %}
-                                <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
-                            {% endfor %}
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Выбрать категорию
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for cat in category_list %}
+                                    <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
 
 
-                <br>
-                <div class="list-group">
+                    <br>
+                    <div class="list-group">
 
-                    <ul class="list-group" id="contest_list_ul">
+                        <ul class="list-group" id="contest_list_ul">
 
-                        {% for contest in contest_list %}
-                            <li class="list-group-item">
-                                <div>
-                                    <span><strong>{{ contest.title }}</strong></span>
-                                    <br>
+                            {% for contest in contest_list %}
+                                <li class="list-group-item">
+                                    <div>
+                                        <span><strong>{{ contest.title }}</strong></span>
+                                        <br>
                                     <span>{{ contest.description }}</span>
 
                                 </div>

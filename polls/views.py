@@ -2,11 +2,18 @@ import csv
 from datetime import time, datetime
 import pandas as pd
 import json
+
+import vk
+
+import requests
+from bs4 import BeautifulSoup
 from django.core import serializers
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import vk_parsing
+import website_parsing
 
 from .models import *
 from .forms import *
@@ -84,3 +91,47 @@ def addData(request):
                                );
 
     return redirect("index")
+
+@csrf_exempt
+def vkParsing(request):
+    session = vk.Session(access_token='41547da141547da141547da168410a14134415441547da118ea3a43f6cc46a2ea378d09')
+    vk_api = vk.API(session, v='5.68')
+
+    mas = vk_api.wall.get(owner_id='-101826369', count=30)
+
+    def get_vk_item(json_data, key):
+        text_array = []
+        for i, item in enumerate(json_data['items']):
+            item_text = item[key]
+            text_array.append(item_text)
+        return text_array
+
+    info_array = get_vk_item(mas, 'text')
+    key_words = ['хакатон']
+    clean_info_array = []
+    for info in info_array:
+        for key_word in key_words:
+            if key_word in info:
+                clean_info_array.append(info)
+
+
+@csrf_exempt
+def webParsing(request):
+    res = requests.get("http://portal.tpu.ru/science/konf")
+    soup = BeautifulSoup(res.content, 'lxml')
+
+    data = []
+    for table_row in soup.select("table.little tr")[5:]:
+        col = table_row.find_all("td")
+        try:
+            if col[1].text != 'Инфомационное сообщение':
+                data.append(col[0].text)
+                data.append(col[1].text)
+        except:
+            pass
+
+    resultFyle = open("tpu_website_data.csv", 'wb')
+
+    for r in data:
+        resultFyle.write(r.encode())
+    resultFyle.close()
