@@ -32,6 +32,13 @@ for info in info_array:
 
 print(clean_info_array)
 
+resultFyle = open("vk_data.csv",'wb')
+
+# Write data to file
+for r in clean_info_array:
+    resultFyle.write(r.encode())
+resultFyle.close()
+
 '''
 saving data as json file
 just for checking structure'''

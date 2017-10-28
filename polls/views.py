@@ -114,6 +114,15 @@ def vkParsing(request):
             if key_word in info:
                 clean_info_array.append(info)
 
+    resultFyle = open("vk_data.csv", 'wb')
+
+    # Write data to file
+    for r in clean_info_array:
+        resultFyle.write(r.encode())
+    resultFyle.close()
+
+    return redirect("index")
+
 
 @csrf_exempt
 def webParsing(request):
@@ -135,3 +144,5 @@ def webParsing(request):
     for r in data:
         resultFyle.write(r.encode())
     resultFyle.close()
+
+    return redirect("index")
