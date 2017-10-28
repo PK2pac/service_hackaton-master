@@ -1,3 +1,4 @@
+import csv
 import sys
 import os
 import json
@@ -30,7 +31,20 @@ for info in info_array:
         if key_word in info:
             clean_info_array.append(info)
 
-print(clean_info_array)
+clean_info_array = [w.replace('\n', '') for w in clean_info_array]
+
+"""with open("vkdata.csv",'wb') as resultFile:
+    wr = csv.writer(resultFile, dialect='excel')
+    wr.writerows(clean_info_array)
+"""
+
+resultFyle = open("vkdata.csv",'wb')
+
+# Write data to file
+for r in clean_info_array:
+    resultFyle.write(r.encode())
+resultFyle.close()
+
 
 '''
 saving data as json file
