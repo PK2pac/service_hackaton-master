@@ -141,38 +141,32 @@
     <script>
 
         function chooseCategory(id){
-            jQuery.ajax({
-                url: '/chooseCategory/' + id,
-                type : "GET",
-                data: {
-                    'id': id
-                },
-                dataType: 'json',
+        jQuery.ajax({
+            url: '/chooseCategory/' + id,
+            type : "GET",
+            data: {
+                'id': id
+            },
+            dataType: 'json',
 
-                error: function(data){
-                    var c_list = data['contest_list'];
-                    console.log(data)
-                    console.log(c_list)
-                    var str = "";
-
-                    for (var i = 0; i< list.length; i++){
-                        str += "<li>" + "{{ contest.title }}" + "</li>";
-                    }
-
-                    //   $('#contest_list_ul').empty();
-                    var list1 = JSON.parse(c_list)
-                    for (var i = 0; i < list1.length; i++){
-                        $('#contest_list_ul').append('<li>'+ list1[i].title+'</li>')
-
-                    }
-
-                    //<li class="list-group-item"> <div> <span><strong>first_contest</strong></span> <br> <span>desrctob</span> </div> </li>
-                    //$('#contest_list_ul').text('sss')
-
+            success: function(data){
+                var c_list = data;
+                var string = '';
+                for (var i = 0; i < c_list.length; i++){
+               // $('#contest_list_ul').html('<li>' + c_list[i].description + '</li>')
+                    string += '<li class="list-group-item">'+
+                            '<div>'+
+                                '<span><strong>'+c_list[i].title+'</strong></span>'+
+                                '<br>'+
+                                '<span>'+c_list[i].description+'</span>'+
+                            '</div>'+
+                        '</li>';
                 }
-            });
+                $('#contest_list_ul').html(string)
+            }
+        });
 
-        }
+    }
 
     </script>
 

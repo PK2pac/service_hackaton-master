@@ -1,7 +1,7 @@
 import csv
 from datetime import time, datetime
 import pandas as pd
-
+import json
 from django.core import serializers
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
@@ -26,17 +26,27 @@ def index(request):
     return render(request, "main/index.html", context)
 
 
+def get_t_d(dict):
+    td_list = []
+    for i, item in enumerate(dict):
+        td_list.append({'title': item.title, 'description': item.description})
+    return td_list
+
+
 def chooseCategory(request, id):
     cat_id = request.GET.get('id')
     print(cat_id)
-
     if id == 0:
         contests = Contest.objects.all()
         print('id == 0 print contests=', contests)
-
-    json = serializers.serialize('json', list(contests))
-    print(contests)
-    return HttpResponse(json, content_type="application/json")
+        test = json.dumps(get_t_d(contests))
+        print(contests)
+        return HttpResponse(test, content_type="application/json")
+    else:
+        contests = Contest.objects.filter(category=cat_id)
+        test = json.dumps(get_t_d(contests))
+        print(contests)
+        return HttpResponse(test, content_type="application/json")
 
 
 @csrf_exempt
