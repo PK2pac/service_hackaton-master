@@ -1,4 +1,3 @@
-import polls.constants as constants
 import telebot
 import sqlite3
 from .models import *
@@ -6,7 +5,7 @@ from .models import *
 types = ['конференции', 'конкурсы', 'выставки и встречи', 'праздники', 'концерты', 'фестивали']
 
 def send_newsletter(event):
-    bot = telebot.TeleBot(constants.token)
+    bot = telebot.TeleBot('411438977:AAHARyyJYYD5LCsdMzS7h9VjuF6QEMNRlMI')
     #conn = sqlite3.connect('./db.sqlite3')
     #cursor = conn.cursor()
     #cursor.execute('SELECT * FROM subscribers')
