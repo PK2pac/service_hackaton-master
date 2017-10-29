@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.utils.functional import curry
+
 from polls import views as polls_views
 
 urlpatterns = [
     url(r'^$', polls_views.index, name="index"),
     url(r'^admin/', admin.site.urls),
     url(r'^addData/', polls_views.addData, name="addData"),
-    url(r'^addContest/', polls_views.addContest, name="addContest"),
-    url(r'^vkParsing/', polls_views.vkParsing, name="vkParsing"),
-    url(r'^webParsing/', polls_views.webParsing, name="webParsing"),
     url(r'^chooseCategory/(?P<id>[0-9]+)', polls_views.chooseCategory, name="chooseCategory"),
 ]
+from django.views.defaults import server_error, page_not_found, permission_denied
+handler404 = curry(page_not_found, exception=Exception('Page not Found'), template_name='404.html')
