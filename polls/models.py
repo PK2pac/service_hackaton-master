@@ -12,3 +12,7 @@ class Contest(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subsriber(models.Model):
+    subscriber_id = models.IntegerField()

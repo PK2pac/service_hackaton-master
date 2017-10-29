@@ -11,10 +11,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+import polls.test as telegram_test
 
 
 def index(request):
-    contests = Contest.objects.all().order_by('date_start')
+    contests = Contest.objects.all().order_by('date_start').distinct()
     categories = Contest.objects.order_by().values('category').distinct()
     labels = ['Конкурс', 'Конференция']
 
@@ -56,11 +57,11 @@ def get_t_d(dict):
 def chooseCategory(request, id):
     cat_id = request.GET.get('id')
     if int(cat_id) == 9 or int(id) == 9:
-        contests = Contest.objects.all()
+        contests = Contest.objects.all().distinct()
         test = json.dumps(get_t_d(contests))
         return HttpResponse(test, content_type="application/json")
     else:
-        contests = Contest.objects.filter(category=cat_id)
+        contests = Contest.objects.filter(category=cat_id).distinct()
         test = json.dumps(get_t_d(contests))
         return HttpResponse(test, content_type="application/json")
 
@@ -84,6 +85,7 @@ def addData(request):
                                address=str(row['adress'])
                                );
 
+
     return redirect("index")
 
 
@@ -100,12 +102,15 @@ def addContest(request):
         coordinates=""
         Contest.objects.create(title=title,
                                description=description,
-                               category=categ,
+                               category=categ[0],
                                date_start=datetime.strptime(start, "%d.%m.%Y").date(),
                                date_finish=datetime.strptime(finish, "%d.%m.%Y").date(),
                                site_link=link,
                                address=address,
                                coordinates=coordinates)
+
+        event = [title,start,finish,address,link ]
+        telegram_test.send_newsletter(event)
 
     return redirect("index")
 
