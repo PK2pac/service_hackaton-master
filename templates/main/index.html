@@ -15,7 +15,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="add_data-tab" data-toggle="tab" href="#add_data" role="tab" aria-controls="list"
-               aria-selected="false">Добаление данных</a>
+               aria-selected="false">Добавление данных</a>
         </li>
     </ul>
 
@@ -89,8 +89,26 @@
                                 Выбрать категорию
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-item" onclick="chooseCategory(9)">Все</div>
                                 {% for cat in category_list %}
-                                    <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">{{ cat.category }}</div>
+                                    {% if  cat.category == 0 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Конференции</div>
+                                    {% endif %}
+                                    {% if  cat.category == 1 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Конкурсы</div>
+                                    {% endif %}
+                                    {% if  cat.category == 2 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Выставки и встречи</div>
+                                    {% endif %}
+                                    {% if  cat.category == 3 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Праздники</div>
+                                    {% endif %}
+                                    {% if  cat.category == 4 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Концерты</div>
+                                    {% endif %}
+                                    {% if  cat.category == 5 %}
+                                        <div class="dropdown-item" onclick="chooseCategory({{ cat.category }})">Фестивали</div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>

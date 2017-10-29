@@ -7,27 +7,21 @@ import vk
 
 import requests
 from bs4 import BeautifulSoup
-from django.core import serializers
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-import vk_parsing
-import website_parsing
-
 from .models import *
-from .forms import *
-# Create your views here.
-#import jsonpickle
 
 
 def index(request):
-    contests = Contest.objects.all()
-    categories = Contest.objects.values('category').distinct().order_by()
+    contests = Contest.objects.all().order_by('date_start')
+    categories = Contest.objects.order_by().values('category').distinct()
+    labels = ['Конкурс', 'Конференция']
 
     context = {
         'contest_list': contests,
-        'category_list': categories
+        'category_list': categories,
+        'category_label': labels
     }
 
     return render(request, "main/index.html", context)
@@ -61,9 +55,8 @@ def get_t_d(dict):
 
 def chooseCategory(request, id):
     cat_id = request.GET.get('id')
-    if id == 0:
+    if int(cat_id) == 9 or int(id) == 9:
         contests = Contest.objects.all()
-        #print('id == 0 print contests=', contests)
         test = json.dumps(get_t_d(contests))
         return HttpResponse(test, content_type="application/json")
     else:
