@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+    <script src="http://pagination.js.org/dist/2.0.7/pagination.min.js"></script>
+    <link rel="stylesheet" href="http://pagination.js.org/dist/2.0.7/pagination.css">
+
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Карта</a>
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map"
+               aria-selected="true">Карта</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false">Список мероприятий</a>
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list"
+               aria-selected="false">Список мероприятий</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="add_data-tab" data-toggle="tab" href="#add_data" role="tab" aria-controls="list" aria-selected="false">Добаление данных</a>
+            <a class="nav-link" id="add_data-tab" data-toggle="tab" href="#add_data" role="tab" aria-controls="list"
+               aria-selected="false">Добаление данных</a>
         </li>
     </ul>
 
@@ -35,7 +41,7 @@
                         var latLng = "{{ organisation.coordinates }}".toString().split(',');
                         var lat = Number(parseFloat(latLng[0]).toFixed(6));
                         var lng = Number(parseFloat(latLng[1]).toFixed(6));
-                        var point = new google.maps.LatLng(lat,lng);
+                        var point = new google.maps.LatLng(lat, lng);
 
                         var image = 'https://cdn4.iconfinder.com/data/icons/32x32-free-design-icons/32/Info.png';
                         var marker = new google.maps.Marker({
@@ -48,10 +54,10 @@
 
 
                         marker['infowindow'] = new google.maps.InfoWindow({
-                            content: "<ul>"+"{{ organisation.title }}"+"</ul>"
+                            content: "<ul>" + "{{ organisation.title }}" + "</ul>"
                         });
 
-                        google.maps.event.addListener(marker, 'click', function() {
+                        google.maps.event.addListener(marker, 'click', function () {
                             this['infowindow'].open(map, this);
                         });
 
@@ -96,57 +102,61 @@
                     <div class="list-group">
 
 
-                        <table class="table">
-                            <th  style="width: 60%">
-                                Мероприятие
-                            </th>
-                            <th  style="width: 20%">
-                                Даты проведения
-                            </th>
-                            <th  style="width: 20%">
-                                Адрес
-                            </th>
-                        </table>
+                    <table class="table">
+                    <th  style="width: 60%">
+                        Мероприятие
+                    </th>
+                        <th  style="width: 20%">
+                        Даты проведения
+                    </th>
+                        <th  style="width: 20%">
+                        Адрес
+                    </th>
+                    </table>
                         <ul class="list-group" id="contest_list_ul">
 
                             {% for contest in contest_list %}
                                 <li class="list-group-item">
 
 
-                                    <table class="table">
+                                <table class="table">
 
-                                        <tr>
-                                            <td style="width: 60%">
-                                                <a href="{{ contest.site_link }}"><span><strong>{{ contest.title }}</strong></span></a>
-                                                <br>
-                                                <span>{{ contest.description }}</span>
-                                            </td>
-                                            <td style="width: 20%">
-                                                <span>{{ contest.date_start }}</span>
-                                                <br>-------<br>
-                                                <span>{{ contest.date_finish }}</span>
-                                            </td>
-                                            <td style="width: 20%">
-                                                <span>
-                                                    {{ contest.address }}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </li>
-                            {% endfor %}
+                                    <tr>
+                                        <td style="width: 60%">
+                                            <a href="{{ contest.site_link }}"><span><strong>{{ contest.title }}</strong></span></a>
+                                        <br>
+                                    <span>{{ contest.description }}</span>
+                                        </td>
+                                        <td style="width: 20%">
+                                            <span>{{ contest.date_start }}</span>
+                                            <br>-------<br>
+                                            <span>{{ contest.date_finish }}</span>
+                                        </td>
+                                        <td style="width: 20%">
+                                            <span>
+                                                {{ contest.address }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
+                        {% endfor %}
 
                         </ul>
+                    <center>
+                        <div id="pagination-bar"></div>
+                    </center>
+
                     </div>
 
-                </div>
-            </center>
+            </div>
+        </center>
         </div>
 
         <div class="tab-pane fade" id="add_data" role="tabpanel" aria-labelledby="add_data-tab">
 
 
-            <div  style="width:80%; padding-left: 10%">
+            <div style="width:80%; padding-left: 10%">
                 <br>
                 <table>
                     <tr>
@@ -161,38 +171,40 @@
                         <td>
                             <form action="/vkParsing/">
                                 <div class="form-group">
-                                    <input type="submit"  value="Найти мероприятия VK" class="btn btn-success">
+                                    <input type="submit" value="Найти мероприятия VK" class="btn btn-success">
                                 </div>
                             </form>
                         </td>
                         <td>
                             <form action="/webParsing/">
                                 <div class="form-group">
-                                    <input type="submit"  value="Найти мероприятия Web" class="btn btn-info">
+                                    <input type="submit" value="Найти мероприятия Web" class="btn btn-info">
                                 </div>
                             </form>
                         </td>
                     </tr>
                 </table>
 
+
                 <div class="card">
                     <div class="card-header">
                         Добавление мероприятия
                     </div>
                     <div class="card-body">
-                        <form action="/addContest/" method="POST">
+                        <form action="/addContest/" method="post">
                             <div class="form-group">
                                 <label for="title">Название мероприятия</label>
-                                <input type="text" class="form-control" id="title" placeholder="Название...">
+                                <input type="text" class="form-control" name="title"
+                                       placeholder="Название...">
                             </div>
                             <div class="form-group">
                                 <label for="descr">Описание мероприятия</label>
-                                <textarea class="form-control" id="descr" rows="3"></textarea>
+                                <textarea class="form-control" name="descr" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="categ">Категория мероприятия</label>
-                                <select class="form-control" id="categ">
-                                    <option>1</option>
+                                <select class="form-control" name="categ">
+                                    <option>1</option><span>Конкурс</span>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
@@ -202,62 +214,78 @@
                             </div>
                             <div class="form-group">
                                 <label for="start">Дата начала</label>
-                                <input type="text" class="form-control" id="start" placeholder="дд.мм.гггг">
+                                <input type="text" class="form-control" name="start"
+                                       placeholder="дд.мм.гггг">
                             </div>
                             <div class="form-group">
                                 <label for="finish">Дата конца</label>
-                                <input type="text" class="form-control" id="finish" placeholder="дд.мм.гггг">
+                                <input type="text" class="form-control" name="finish"
+                                       placeholder="дд.мм.гггг">
                             </div>
                             <div class="form-group">
                                 <label for="link">Ссылка на мероприятие</label>
-                                <input type="text" class="form-control" id="link" placeholder="Http://">
+                                <input type="text" class="form-control" name="link"
+                                       placeholder="Http://">
                             </div>
                             <div class="form-group">
                                 <label for="address">Адрес</label>
-                                <input type="text" class="form-control" id="address" placeholder="г. Томск, ул. Ленина, 30">
+                                <input type="text" class="form-control" name="address"
+                                       placeholder="г. Томск, ул. Ленина, 30">
                             </div>
-                            <input type="submit"  value="Добавить мероприятие" class="btn btn-primary">
+                            <input type="submit" value="Добавить мероприятие" class="btn btn-primary">
                         </form>
                     </div>
                 </div>
             </div>
+ </div>
         </div>
-    </div>
 
-    <script>
+        <script>
 
-        function chooseCategory(id){
-            jQuery.ajax({
-                url: '/chooseCategory/' + id,
-                type : "GET",
-                data: {
-                    'id': id
-                },
-                dataType: 'json',
+            function chooseCategory(id) {
+                jQuery.ajax({
+                    url: '/chooseCategory/' + id,
+                    type: "GET",
+                    data: {
+                        'id': id
+                    },
+                    dataType: 'json',
 
-                success: function(data){
-                    var c_list = data;
-                    var string = '';
-                    for (var i = 0; i < c_list.length; i++){
-                        // $('#contest_list_ul').html('<li>' + c_list[i].description + '</li>')
-                        string += '<li class="list-group-item">'+
-                            '<div>'+
-                            '<span><strong>'+c_list[i].title+'</strong></span>'+
-                            '<br>'+
-                            '<span>'+c_list[i].description+'</span>'+
-                            '</div>'+
-                            '</li>';
+                    success: function (data) {
+                        $('#pagination-bar').pagination({
+                            dataSource: data,
+                            callback: function (c_list, pagination) {
+                                var string = '';
+                                // template method of yourself
+                                for (var i = 0; i < c_list.length; i++) {
 
+                                    string += '<li class="list-group-item">' +
+                                        '<table class="table">' +
+                                        '<tr>' +
+                                        '<td style="width: 60%">'+
+                                        '<a href="' + c_list[i].site_link + '"><span><strong>'+ c_list[i].title +'</strong></span></a>' +
+                                        '<br>'+
+                                        '<span>'+ c_list[i].description + '</span>' +
+                                        '</td>' +
+                                        '<td>'+
+                                        '<span>'+ c_list[i].date_start +'</span> ' +
+                                        '<br>-------<br>'+
+                                        '<span>'+ c_list[i].date_finish +'</span> '+
+                                        '</td>' +
+                                        '<td>'+
+                                        '<span>'+ c_list[i].address +'</span> '+
+                                        '</td>' +
+                                        '</tr>' +
+                                        '</table>'+
+                                        '</li>'
+                                }
+
+                                $('#contest_list_ul').html(string)
+                            }
+                        })
                     }
-                    $('#contest_list_ul').html(string)
-                }
-            });
-
-        }
-
-
-
-
-    </script>
+                });
+            }
+        </script>
 
 {% endblock %}

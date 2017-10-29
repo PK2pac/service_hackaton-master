@@ -50,7 +50,12 @@ def get_t_d(dict):
 def get_t_d(dict):
     td_list = []
     for i, item in enumerate(dict):
-        td_list.append({'title': item.title, 'description': item.description})
+        td_list.append({'title': item.title,
+                        'description': item.description,
+                        'date_start': str(item.date_start),
+                        'date_finish': str(item.date_finish),
+                        'site_link': item.site_link,
+                        'address': item.address})
     return td_list
 
 
@@ -91,15 +96,23 @@ def addData(request):
 
 @csrf_exempt
 def addContest(request):
-    title = request.POST['title']
-    description = request.POST['descr']
-    categ = request.POST['categ']
-    start = request.POST['start']
-    finish = request.POST['finish']
-    link = request.POST['link']
-    address = request.POST['address']
-    coordinates=""
-    Contest.objects.create(title=title, description=description, category=categ, date_start=None, date_finish=None, site_link=link,address=address, coordinates="")
+    if request.POST['title']:
+        title = request.POST['title']
+        description = request.POST['descr']
+        categ = request.POST['categ']
+        start = request.POST['start']
+        finish = request.POST['finish']
+        link = request.POST['link']
+        address = request.POST['address']
+        coordinates=""
+        Contest.objects.create(title=title,
+                               description=description,
+                               category=categ,
+                               date_start=datetime.strptime(start, "%d.%m.%Y").date(),
+                               date_finish=datetime.strptime(finish, "%d.%m.%Y").date(),
+                               site_link=link,
+                               address=address,
+                               coordinates=coordinates)
 
     return redirect("index")
 
